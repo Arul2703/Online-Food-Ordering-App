@@ -1,0 +1,36 @@
+<div *ngIf="foodCategories.length > 0">
+  <h1>Menu</h1>
+  <h2>eat fresh &amp; healthy</h2>
+  <br>
+
+  <div class="row">
+    <div class="col-md-4 mb-3" *ngFor="let category of foodCategories">
+      <div class="card">
+        <div class="card-header">
+          <h4>{{ category.name }}</h4>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <tbody>
+              <tr *ngFor="let foodItem of category.items">
+                <td>
+                  <img [src]="'~/src/assets/image/' + foodItem.imageUrl" alt="Food Item Image">
+                </td>
+                <!-- src\assets\image -->
+                <td>
+                  <h5>{{ foodItem.name }}</h5>
+                  <!-- <p>Category: {{ foodItem.category }}</p> -->
+                  <p>Price: {{ foodItem.price }}</p>
+                  <form (ngSubmit)="addToCart(foodItem.id)" [formGroup]="addToCartForm">
+                    <input type="hidden" name="itemId" formControlName="itemId" />
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                  </form>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
