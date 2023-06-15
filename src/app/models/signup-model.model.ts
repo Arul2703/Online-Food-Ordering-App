@@ -1,0 +1,47 @@
+import { Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+
+export class SignUpModel {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+
+  constructor() {
+    this.name = '';
+    this.email = '';
+    this.password = '';
+    this.confirmPassword = '';
+  }
+
+  static getValidationRules(): { [key: string]: any } {
+    return {
+      name: ['', [
+        Validators.required,
+        Validators.pattern('^[A-Z][a-zA-Z]{2,}\\s[A-Z][a-zA-Z\\s]*$'),
+        Validators.minLength(5),
+        Validators.maxLength(50)
+      ]],
+      email: ['', [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9]+[a-zA-Z0-9._%+-]*@[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*\\.[a-zA-Z]{2,}$')
+      ]],
+      password: ['', [
+        Validators.required,
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*\\W).{6,}$'),
+        Validators.minLength(6)
+      ]],
+      confirmPassword: ['', [
+        Validators.required,
+        this.matchPasswordValidator() // Custom validator to check if password and confirmPassword match
+      ]]
+    };
+  }
+
+  private static matchPasswordValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const password = control.root.get('password')?.value;
+      const confirmPassword = control.value;
+      return password === confirmPassword ? null : { passwordsNotMatched: true };
+    };
+  }
+}

@@ -7,6 +7,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MenuComponent } from './menu/menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import {ReactiveFormsModule } from '@angular/forms';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
+import { CategoryFilterPipe } from './category-filter.pipe';
 
 
 @NgModule({
@@ -14,6 +17,9 @@ import {ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     NavbarComponent,
     MenuComponent,
+    SignupComponent,
+    LoginComponent,
+    CategoryFilterPipe,
   ],
   imports: [
     BrowserModule,

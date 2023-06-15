@@ -1,0 +1,17 @@
+.error-message {
+  color: red;
+}
+
+.invalid {
+  border: 1px solid red;
+}
+
+.form-invalid {
+  border: 2px solid red;
+}
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

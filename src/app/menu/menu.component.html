@@ -1,34 +1,36 @@
-<div *ngIf="foodCategories.length > 0">
-  <h1>Menu</h1>
-  <h2>eat fresh &amp; healthy</h2>
+<div class="filter-container">
+  <button (click)="filterItems('All')">All</button>
+  <button *ngFor="let category of foodCategories" (click)="filterItems(category.name)">
+    {{ category.name }}
+  </button>
+</div>
+
+<div *ngIf="foodCategories.length > 0" class="menu-container">
+  <h1 class="menu-title">Menu</h1>
+  <h2 class="menu-subtitle">eat fresh &amp; healthy</h2>
   <br>
 
-  <div class="row">
-    <div class="col-md-4 mb-3" *ngFor="let category of foodCategories">
-      <div class="card">
-        <div class="card-header">
-          <h4>{{ category.name }}</h4>
-        </div>
-        <div class="card-body">
-          <table class="table">
-            <tbody>
-              <tr *ngFor="let foodItem of category.items">
-                <td>
-                  <img [src]="'~/src/assets/image/' + foodItem.imageUrl" alt="Food Item Image">
-                </td>
-                <!-- src\assets\image -->
-                <td>
-                  <h5>{{ foodItem.name }}</h5>
-                  <!-- <p>Category: {{ foodItem.category }}</p> -->
-                  <p>Price: {{ foodItem.price }}</p>
-                  <form (ngSubmit)="addToCart(foodItem.id)" [formGroup]="addToCartForm">
-                    <input type="hidden" name="itemId" formControlName="itemId" />
-                    <button type="submit" class="btn btn-primary">Add to Cart</button>
-                  </form>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+  <div class="food-item-container">
+    <div *ngFor="let category of foodCategories" class="category-item">
+      <div class="category-header">
+        <h4>{{ category.name }}</h4>
+      </div>
+      <div class="food-items">
+        <div *ngFor="let foodItem of category.items | categoryFilter: selectedCategory || 'All'" class="food-item">
+          <div class="food-item-inner">
+            <div class="food-item-image">
+              <img [src]="'/assets/image/' + foodItem.imageUrl" alt="Food Item Image">
+            </div>
+            <div class="food-item-details">
+              <h5 class="food-item-name">{{ foodItem.name }}</h5>
+              <p class="food-item-price">{{ foodItem.price | currency: 'INR' }}</p>
+              <form (ngSubmit)="addToCart(foodItem.id)" [formGroup]="addToCartForm">
+                <input type="hidden" name="itemId" formControlName="itemId" />
+                <button type="submit" class="add-to-cart-button">Add to Cart</button>
+              </form>
+            </div>
+            
+          </div>
         </div>
       </div>
     </div>
